@@ -6,11 +6,13 @@ on:
       - closed
     branches:
       - develop
+      - main
   push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
     branches: 
       - "feature/*"
       - develop
-      - "release-v*"
 
 jobs:
   build-feature: 
@@ -31,13 +33,34 @@ jobs:
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
       - run: echo Deploy to dev
-  deploy-pre: 
-   name: Deploy to pre
-   needs: build-feature 
-   if: startsWith( github.ref_name, 'release')
-   runs-on: ubuntu-latest
-   steps:
-      - run: echo build release
-      - name: Print info
-        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to pre    
+  build-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'develop')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+  #deploy-pre: 
+  # name: Deploy to pre
+  # needs: build-feature 
+  # if: startsWith( github.ref_name, 'release')
+  # runs-on: ubuntu-latest
+  # steps:
+  #    - run: echo build release
+  #    - name: Print info
+  #      run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+  #    - run: echo Deploy to pre    
