@@ -37,7 +37,7 @@ jobs:
     name: Create Release
     needs: build-feature
     runs-on: ubuntu-latest
-    if: startsWith(github.ref_name, 'release')
+    if: github.event.pull_request.merged == false && startsWith(github.ref_name, 'release')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
