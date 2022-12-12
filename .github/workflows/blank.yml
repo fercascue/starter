@@ -37,7 +37,7 @@ jobs:
     name: Create Release
     needs: build-feature
     runs-on: ubuntu-latest
-    if: startsWith(github.ref_name, 'release') || startsWith(github.ref_name, 'main')
+    if: github.event.pull_request.merged == false && startsWith(github.ref_name, 'release')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -67,8 +67,8 @@ jobs:
       - run: echo Deploy to pre
   deploy-pro: 
    name: Deploy to pro
-   needs: build-release 
-   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'main')
+   needs: build-feature 
+   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'release')
    runs-on: ubuntu-latest
    steps:
       - run: echo build release
