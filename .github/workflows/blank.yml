@@ -13,7 +13,7 @@ on:
     branches: 
       - "feature/*"
       - develop
-
+      - "release*"
 jobs:
   build-feature: 
    name: Build project
@@ -35,8 +35,9 @@ jobs:
       - run: echo Deploy to dev
   build-release:
     name: Create Release
+    needs: build-feature
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'develop')
+    if: startsWith(github.ref_name, 'release')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -54,13 +55,23 @@ jobs:
             - Second Change
           draft: false
           prerelease: false
-  #deploy-pre: 
-  # name: Deploy to pre
-  # needs: build-feature 
-  # if: startsWith( github.ref_name, 'release')
-  # runs-on: ubuntu-latest
-  # steps:
-  #    - run: echo build release
-  #    - name: Print info
-  #      run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-  #    - run: echo Deploy to pre    
+  deploy-pre: 
+   name: Deploy to pre
+   needs: build-release 
+   if: startsWith( github.ref_name, 'release')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo build release
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+      - run: echo Deploy to pre
+  deploy-pro: 
+   name: Deploy to pro
+   needs: build-release 
+   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'release')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo build release
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+      - run: echo Deploy to pre        
