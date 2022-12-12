@@ -68,7 +68,7 @@ jobs:
   deploy-pro: 
    name: Deploy to pro
    needs: build-feature 
-   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'release')
+   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'main')
    runs-on: ubuntu-latest
    steps:
       - run: echo build release
