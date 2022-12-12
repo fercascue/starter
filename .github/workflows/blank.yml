@@ -64,4 +64,14 @@ jobs:
       - run: echo build release
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to pre    
+      - run: echo Deploy to pre
+  deploy-pro: 
+   name: Deploy to pro
+   needs: build-release 
+   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'release')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo build release
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+      - run: echo Deploy to pre        
