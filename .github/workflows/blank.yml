@@ -67,7 +67,7 @@ jobs:
       - run: echo Deploy to pre
   deploy-pro: 
    name: Deploy to pro
-   needs: build-release 
+   needs: build-feature 
    if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'release')
    runs-on: ubuntu-latest
    steps:
