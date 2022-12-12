@@ -13,7 +13,7 @@ on:
     branches: 
       - "feature/*"
       - develop
-
+      - "release*"
 jobs:
   build-feature: 
    name: Build project
@@ -36,7 +36,7 @@ jobs:
   build-release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'develop')
+    if: startsWith(github.head_ref, 'release*')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
