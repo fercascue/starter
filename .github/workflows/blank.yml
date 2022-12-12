@@ -26,4 +26,7 @@ jobs:
    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature/')
    runs-on: ubuntu-latest
    steps:
+      - run: echo build feature
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
       - run: echo Deploy to dev       
