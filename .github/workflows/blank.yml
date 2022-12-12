@@ -10,14 +10,15 @@ on:
     branches: 
       - "feature/*"
       - develop
+      - "release-v*"
 
 jobs:
   build-feature: 
-   name: Build feature
+   name: Build project
    #if: startsWith( github.ref_name, 'feature')
    runs-on: ubuntu-latest
    steps:
-      - run: echo build feature
+      - run: echo build project
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
   deploy-dev: 
@@ -29,4 +30,14 @@ jobs:
       - run: echo build feature
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to dev       
+      - run: echo Deploy to dev
+  deploy-pre: 
+   name: Deploy to pre
+   needs: build-feature 
+   if: startsWith( github.ref_name, 'release')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo build release
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+      - run: echo Deploy to pre    
