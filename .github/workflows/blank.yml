@@ -13,9 +13,17 @@ on:
 jobs:
   build-feature: 
    name: Build feature
-   if: startsWith( github.ref_name, 'test')
+   if: startsWith( github.ref_name, 'feature')
    runs-on: ubuntu-latest
    steps:
       - run: echo build feature
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+  deploy-dev: 
+   name: Deploy to dev
+   environment:
+     name: dev
+   if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature/')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo Deploy to dev       
