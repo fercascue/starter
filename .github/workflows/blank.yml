@@ -56,7 +56,7 @@ jobs:
           prerelease: false
   deploy-pre: 
    name: Deploy to pre
-   needs: [Build project,build-release] 
+   needs: [build-feature,build-release] 
    if: startsWith( github.ref_name, 'release')
    runs-on: ubuntu-latest
    steps:
