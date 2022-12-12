@@ -6,6 +6,7 @@ on:
       - closed
     branches:
       - develop
+      - main
   push:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
@@ -35,6 +36,7 @@ jobs:
   build-release:
     name: Create Release
     runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'develop')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
