@@ -16,3 +16,5 @@ jobs:
    runs-on: ubuntu-latest
    steps:
       - run: echo build feature
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
