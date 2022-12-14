@@ -42,22 +42,9 @@ jobs:
        run: npm run build --if-present     
      - name: Linting source code 
        run: npm run lint
-  generate-release:
-    if: ${{ github.event_name == 'push' }}
-    needs: build-project
-    runs-on: ubuntu-latest
-    steps:
-     - name: Generate release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo Generate proyect release
-  deploy-release:
-    if: ${{ github.event_name == 'push' }}
-    needs: generate-release
-    runs-on: ubuntu-latest
-    steps:
-     - name: Deploy release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo Deploy proyect release
+
   check-project:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'push' }} || ${{ github.event_name == 'pull_request' }}
     needs: build-project
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +55,25 @@ jobs:
      #- run: echo " event name '${{ github.event_name }}' " 
      #- run: echo " base ref '${{ github.base_ref }}' " 
      #- run: echo " head ref '${{ github.head_ref }}' " 
+  
+  generate-release:
+    if: ${{ github.event_name == 'push' }}
+    needs: check-project
+    runs-on: ubuntu-latest
+    steps:
+     - name: Generate release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
+       run: echo Generate proyect release
+ 
+  deploy-release:
+    if: ${{ github.event_name == 'push' }}
+    needs: generate-release
+    runs-on: ubuntu-latest
+    steps:
+     - name: Deploy release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
+       run: echo Deploy proyect release
+  
   deploy-project:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
     runs-on: ubuntu-latest
     steps:
