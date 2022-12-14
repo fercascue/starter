@@ -7,6 +7,10 @@ on:
     branches:
       - develop
       - "feature/*"
+  push:
+    branches:
+      # We can define multiple branches as well      
+      - develop
 
 jobs:
   deploy:
