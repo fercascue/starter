@@ -56,7 +56,7 @@ jobs:
      #- run: echo " head ref '${{ github.head_ref }}' " 
   
   deploy-release:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
     uses: ./.github/workflows/reusable-workflow.yml
     with:
