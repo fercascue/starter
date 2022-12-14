@@ -58,8 +58,16 @@ jobs:
      #- run: echo " head ref '${{ github.head_ref }}' " 
   deploy-project:
     needs: check-project
-    runs-on: ubuntu-latest
-    steps:
-     - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo Deploy del proyecto 
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      stage: dev
+  #  secrets:
+  #    AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+  #    AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+  #deploy-project:
+  #  needs: check-project
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #  - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
+  #     run: echo Deploy del proyecto 
      
