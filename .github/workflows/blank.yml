@@ -15,20 +15,15 @@ on:
       - develop
       - "release*"
 jobs:
-  checkout-code: 
-   name: Checkout code 
-   runs-on: ubuntu-latest
-   steps:
-      - run: echo "Checkout '${{ github.ref_name }}' pushed by '${{ github.event.pusher.name }}'" 
-      - uses: actions/checkout@v2
-  build-project: 
+  build-feature: 
    name: Build project
-   needs: checkout-code
    runs-on: ubuntu-latest
    strategy:
       matrix:
         node-version: [16.x]
    steps:
+      - run: echo build project
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -37,3 +32,13 @@ jobs:
       - run: npm run build --if-present
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+  deploy-dev: 
+   name: Deploy to dev
+   needs: build-feature 
+   if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature/')
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo build feature
+      - name: Print info
+        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+      - run: echo Deploy to dev
