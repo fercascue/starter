@@ -2,6 +2,8 @@ name: Continuous Integration (CI)
 
 on:
   pull_request:
+    types: 
+      - closed
     branches:
       - develop
   push:
