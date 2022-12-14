@@ -39,10 +39,10 @@ jobs:
             ${{ runner.os }}-
       
       - name: Install package dependencies
-        run: npm install
+      - run: npm install
       - name: Deploy the app
         # This assumes that there is deploy script, change as required
-        - run: echo deploy project
+      - run: echo deploy project
         # Environment secrets, generally stored in Github Secrets (un-comment as required)
         # env:
           # deployment_token: ${{ secrets.ACTIONS_DEPLOYMENT_TOKEN }}
