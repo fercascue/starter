@@ -82,6 +82,7 @@ jobs:
   merge-master-back-to-dev:
     if: github.event.pull_request.merged == true
     timeout-minutes: 2
+    needs: deploy-project
     runs-on: ubuntu-latest
     steps: 
      - name: Merge from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
