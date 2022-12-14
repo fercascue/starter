@@ -9,8 +9,7 @@ on:
     branches:
       #- main
       - "release*"
-      #- develop
-      
+      #- develop 
 jobs:
   build-project:
     # Defines the type of runner the job runs on
