@@ -73,6 +73,7 @@ jobs:
        run: echo Deploy proyect release
   
   deploy-project:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
     runs-on: ubuntu-latest
     steps:
