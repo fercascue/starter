@@ -15,16 +15,20 @@ on:
       - develop
       - "release*"
 jobs:
-  build-feature: 
+  checkout-code: 
+   name: Checkout code 
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo "Checkout '${{ github.ref_name }}' pushed by '${{ github.event.pusher.name }}'" 
+      - uses: actions/checkout@v2
+  build-project: 
    name: Build project
-   #if: startsWith( github.ref_name, 'feature')
+   needs: checkout-code
    runs-on: ubuntu-latest
    strategy:
       matrix:
         node-version: [16.x]
    steps:
-      - run: echo build project
-      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -33,55 +37,3 @@ jobs:
       - run: npm run build --if-present
       - name: Print info
         run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-  deploy-dev: 
-   name: Deploy to dev
-   needs: build-feature 
-   if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature/')
-   runs-on: ubuntu-latest
-   steps:
-      - run: echo build feature
-      - name: Print info
-        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to dev
-  build-release:
-    name: Create Release
-    needs: build-feature
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false && startsWith(github.ref_name, 'release')
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-  deploy-pre: 
-   name: Deploy to pre
-   needs: build-release 
-   if: startsWith( github.ref_name, 'release')
-   runs-on: ubuntu-latest
-   steps:
-      - run: echo build release
-      - name: Print info
-        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to pre
-  deploy-pro: 
-   name: Deploy to pro
-   needs: build-feature 
-   if: github.event.pull_request.merged == true && startsWith( github.ref_name, 'main')
-   runs-on: ubuntu-latest
-   steps:
-      - run: echo build release
-      - name: Print info
-        run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-      - run: echo Deploy to pre        
