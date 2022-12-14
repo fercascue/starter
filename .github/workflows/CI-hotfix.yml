@@ -57,12 +57,14 @@ jobs:
      #- run: echo " head ref '${{ github.head_ref }}' " 
   
   deploy-hotfix-to-pro:
+   if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       stage: pro
 
   generate-hotfix-release:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
     runs-on: ubuntu-latest
     steps:
