@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    # Defines the type of runner the job runs on
+    # Defines the type of runner the job runs on.
     runs-on: ubuntu-latest
 
     steps:
@@ -20,8 +20,7 @@ jobs:
       - name: Set up NodeJS environment
         uses: actions/setup-node@v2
         with:
-          # Reads the node version from the .nvmrc file itself
-          node-version-file: '.nvmrc'
+          node-version: 16
 
       # Consider this as an add on to optimize the execution of actions
       - name: Cache node modules
@@ -39,10 +38,10 @@ jobs:
             ${{ runner.os }}-
       
       - name: Install package dependencies
-      - run: npm install
+        run: npm install
       - name: Deploy the app
         # This assumes that there is deploy script, change as required
-      - run: echo deploy project
+        run: echo deploy project
         # Environment secrets, generally stored in Github Secrets (un-comment as required)
         # env:
           # deployment_token: ${{ secrets.ACTIONS_DEPLOYMENT_TOKEN }}
