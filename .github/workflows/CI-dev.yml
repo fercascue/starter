@@ -57,6 +57,7 @@ jobs:
      #- run: echo " base ref '${{ github.base_ref }}' " 
      #- run: echo " head ref '${{ github.head_ref }}' " 
   deploy-project:
+    needs: check-project
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       stage: dev
