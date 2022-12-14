@@ -1,27 +1,29 @@
 name: Continuous Integration (CI)
 
 on:
-  pull_request:
-    branches:
-      - develop
+  #pull_request:
+  #  branches:
+  #    - develop
   push:
     branches:
-      - main
+      #- main
       - "feature/*"
-      - develop
+      #- develop
       
 jobs:
-  build:
+  build-project:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-     - name: build project
-       run: echo build project
-     - run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-     - run: echo " run number '${{ github.run_number }}' "  
-     - run: echo " event name '${{ github.event_name }}' " 
-     - run: echo " base ref '${{ github.base_ref }}' " 
-     - run: echo " head ref '${{ github.head_ref }}' " 
+     - name: Checking out project from ${{ github.ref_name }}
+       run: echo Build code
+     #- run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
+     #- run: echo " run number '${{ github.run_number }}' "  
+     #- run: echo " event name '${{ github.event_name }}' " 
+     #- run: echo " base ref '${{ github.base_ref }}' " 
+     #- run: echo " head ref '${{ github.head_ref }}' " 
 
      
