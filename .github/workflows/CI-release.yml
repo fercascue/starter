@@ -9,8 +9,7 @@ on:
     branches:
       #- main
       - "release*"
-      #- develop
-      
+      #- develop 
 jobs:
   build-project:
     # Defines the type of runner the job runs on
@@ -67,15 +66,23 @@ jobs:
   deploy-release:
     if: ${{ github.event_name == 'push' }}
     needs: generate-release
-    runs-on: ubuntu-latest
-    steps:
-     - name: Deploy release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo Deploy proyect release
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      stage: pre
+
+
+  #  steps:
+  #   - name: Deploy release of project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
+  #     run: echo Deploy proyect release
   
   deploy-project:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-project
-    runs-on: ubuntu-latest
-    steps:
-     - name: Deploy project from ${{ github.head_ref }} to PRO ${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo Deploy del proyecto 
-     
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      stage: pro
+    #runs-on: ubuntu-latest
+    #steps:
+    # - name: Deploy project from ${{ github.head_ref }} to PRO ${{ github.base_ref }} ${{ github.head_ref }}
+    #   run: echo Deploy del proyecto 
+      
