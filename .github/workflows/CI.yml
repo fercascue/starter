@@ -16,8 +16,9 @@ jobs:
      - name: build project
        run: echo build project
      - run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
-     - run: echo "'${{ github.run_number }}' "  
-     - run: echo "'${{ github.event_name }}' " 
-     - run: echo "'${{ job.container.id }}' " 
+     - run: echo " run number '${{ github.run_number }}' "  
+     - run: echo " event name '${{ github.event_name }}' " 
+     - run: echo " base ref '${{ github.base_ref }}' " 
+     - run: echo " head ref '${{ github.head_ref }}' " 
 
      
