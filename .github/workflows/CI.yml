@@ -56,7 +56,7 @@ jobs:
      #- run: echo " base ref '${{ github.base_ref }}' " 
      #- run: echo " head ref '${{ github.head_ref }}' " 
   deploy-project:
-    if: ${{ github.ref == 'refs/heads/develop' }}
+    needs: check-project
     runs-on: ubuntu-latest
     steps:
      - name: Deploy project from ${{ github.ref_name }} ${{ github.base_ref }} ${{ github.head_ref }}
