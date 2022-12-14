@@ -17,7 +17,7 @@ jobs:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
     steps:
-     - name: Checking out project from ${{ github.ref_name }}
+     - name: Checking out project from ${{ github.ref_name }} for the event ${{ github.event_name }}
        uses: actions/checkout@v2
      - name: Setup node version ${{ matrix.node-version }}
        uses: actions/setup-node@v1
@@ -48,8 +48,8 @@ jobs:
     needs: build-project
     runs-on: ubuntu-latest
     steps:
-     - name: Checking out project from ${{ github.ref_name }} ${{ github.base_ref }} ${{ github.head_ref }}
-       run: echo check del proyecto
+     - name: Validating project from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
+       run: echo validating del proyecto
      #- run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
      #- run: echo " run number '${{ github.run_number }}' "  
      #- run: echo " event name '${{ github.event_name }}' " 
@@ -59,6 +59,6 @@ jobs:
     needs: check-project
     runs-on: ubuntu-latest
     steps:
-     - name: Deploy project from ${{ github.ref_name }} ${{ github.base_ref }} ${{ github.head_ref }}
+     - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
        run: echo Deploy del proyecto 
      
