@@ -39,7 +39,6 @@ jobs:
             ${{ runner.os }}-
       - name: Install package dependencies
         run: npm install
-
       - name: Deploy the app
         # This assumes that there is deploy script, change as required
         - run: echo deploy project
