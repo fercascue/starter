@@ -1,4 +1,4 @@
-# Getting Started with Create React App update info 4
+# Getting Started with Create React App update info 5
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
