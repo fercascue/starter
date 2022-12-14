@@ -34,6 +34,27 @@ jobs:
     steps:
      - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
        run: echo Deploy del proyecto en el entorno de ${{ inputs.stage }}
+  #merge-release-back-to-dev:
+  #  #if: github.event.pull_request.merged == true
+  #  timeout-minutes: 2
+  #  needs: deploy-to-pre
+  #  runs-on: ubuntu-latest
+  #  steps: 
+  #   - name: Merge from ${{ github.head_ref }} #${{ github.base_ref }} ${{ github.head_ref }}
+  #     run: echo Deploy proyect release
+  #   - uses: actions/checkout@v2
+  #   - name: Set Git config
+  #     run: |
+  #        git config --local user.email "actions@github.com"
+  #        git config --local user.name "Github Actions"
+  #   - name: Merge master back to dev
+  #     run: |
+  #        git fetch --unshallow
+  #        git checkout develop
+  #        git pull
+  #        git merge --no-ff origin/main -m "Auto-merge master back to dev"
+  #        git push 
+  
   merge-master-back-to-dev:
     #if: github.event.pull_request.merged == true
     timeout-minutes: 2
