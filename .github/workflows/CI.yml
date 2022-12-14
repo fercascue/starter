@@ -42,6 +42,7 @@ jobs:
      - name: Linting source code 
        run: npm run lint
   check-project:
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
      - name: Checking out project from ${{ github.ref_name }} ${{ github.base_ref }} ${{ github.head_ref }}
