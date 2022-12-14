@@ -1,8 +1,15 @@
 name: Continuous Integration for Hotfix (CI)
 on:
-  push:
+  pull_request:
+    types: 
+      - closed
     branches:
       - main
+  push:
+    branches:
+      #- main
+      - "hotfix*"
+      #- develop 
       
 jobs:
   build-project:
