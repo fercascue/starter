@@ -53,7 +53,7 @@ jobs:
      #- run: echo " event name '${{ github.event_name }}' " 
      #- run: echo " base ref '${{ github.base_ref }}' " 
      #- run: echo " head ref '${{ github.head_ref }}' " 
-  check-project:
+  deploy-project:
     if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     steps:
