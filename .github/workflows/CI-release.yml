@@ -79,7 +79,7 @@ jobs:
      - name: Deploy project from ${{ github.head_ref }} to PRO ${{ github.base_ref }} ${{ github.head_ref }}
        run: echo Deploy del proyecto 
   merge-master-back-to-dev:
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     timeout-minutes: 2
     needs: deploy-project
     runs-on: ubuntu-latest
