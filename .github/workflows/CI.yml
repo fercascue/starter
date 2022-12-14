@@ -1,9 +1,9 @@
 name: Continuous Integration (CI)
 
 on:
-  #pull_request:
-  #  branches:
-  #    - develop
+  pull_request:
+    branches:
+      - develop
   push:
     branches:
       #- main
@@ -41,7 +41,11 @@ jobs:
        run: npm run build --if-present     
      - name: Linting source code 
        run: npm run lint
-    
+  check-project:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checking out project from ${{ github.ref_name }} ${{ github.base_ref }} ${{ github.head_ref }}
+       run: echo check del proyecto
      #- run: echo "'${{ github.ref_name }}' was pushed by '${{ github.event.pusher.name }}'"
      #- run: echo " run number '${{ github.run_number }}' "  
      #- run: echo " event name '${{ github.event_name }}' " 
