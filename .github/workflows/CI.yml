@@ -17,7 +17,7 @@ jobs:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
     steps:
-     - name: Checking out project from ${{ github.ref_name }}
+     - name: Checking out project from ${{ github.ref_name }} for the event ${{ github.event_name }}
        uses: actions/checkout@v2
      - name: Setup node version ${{ matrix.node-version }}
        uses: actions/setup-node@v1
