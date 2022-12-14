@@ -15,18 +15,21 @@ on:
 jobs:
   deploy-to-dev:
     name: Deploy to ${{ inputs.stage }}
+    runs-on: ubuntu-latest
     if: ${{ inputs.stage == 'dev' }}
     steps:
      - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
        run: echo Deploy del proyecto en el entorno de ${{ inputs.stage }}
   deploy-to-pre:
     name: Deploy to ${{ inputs.stage }}
+    runs-on: ubuntu-latest
     if: ${{ inputs.stage == 'pre' }}
     steps:
      - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
        run: echo Deploy del proyecto en el entorno de ${{ inputs.stage }}
   deploy-to-pro:
     name: Deploy to ${{ inputs.stage }}
+    runs-on: ubuntu-latest
     if: ${{ inputs.stage == 'pro' }}
     steps:
      - name: Deploy project from ${{ github.head_ref }} to DEV ${{ github.base_ref }} ${{ github.head_ref }}
