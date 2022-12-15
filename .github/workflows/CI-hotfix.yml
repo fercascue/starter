@@ -60,7 +60,7 @@ jobs:
          script: |
            return context.payload.ref.replace(/\/refs\/tags\//, '');
      - name: Echo
-       run: echo ${{ steps.tag.outputs.result }}    
+       run: echo valor- ${{ steps.tag.outputs.result }}    
   
   build-project:
     # Defines the type of runner the job runs on
