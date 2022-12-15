@@ -44,6 +44,12 @@ jobs:
          REPO: ${{ github.repository }} 
      - name: Print result
        run: echo " Print ${{ steps.Changelog.outputs.changelog }} "
+     - name: Set env
+       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+     - name: Test
+       run: |
+         echo $RELEASE_VERSION
+         echo ${{ env.RELEASE_VERSION }}  
        
   build-project:
     # Defines the type of runner the job runs on
