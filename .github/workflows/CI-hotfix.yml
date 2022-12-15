@@ -51,14 +51,14 @@ jobs:
          echo $RELEASE_VERSION
          echo ${{ env.RELEASE_VERSION }} 
      - name: Extract tag name
-        id: tag
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            return context.payload.ref.replace(/\/refs\/tags\//, '');
-      - name: Echo
-        run: echo ${{ steps.tag.outputs.result }}    
+       id: tag
+       uses: actions/github-script@0.2.0
+       with:
+         github-token: ${{ secrets.GITHUB_TOKEN }}
+         script: |
+           return context.payload.ref.replace(/\/refs\/tags\//, '');
+     - name: Echo
+       run: echo ${{ steps.tag.outputs.result }}    
   build-project:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
