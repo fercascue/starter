@@ -12,6 +12,19 @@ on:
       #- develop 
       
 jobs:
+  sample-script:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+     - name: script
+       run: ./.github/workflows/entrypoint.sh
+       id: Changelog
+       env:
+         REPO: ${{ github.repository }} 
+     - name: Print result
+       run: echo " Print ${{ steps.Changelog.outputs.changelog }} "
+       
   build-project:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
