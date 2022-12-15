@@ -17,18 +17,18 @@ jobs:
     steps:
      - name: Checkout code
        uses: actions/checkout@v2
-     - name: script run ${{ github.repository }} 
+     - name: script run ${{ github.repository }} ${{ github.ref }} ${{ github.ref }}
        id: Changelog
        run: | #sh ./.github/workflows/entrypoint.sh
           git clone --quiet https://github.com/$REPO &> /dev/null
 
           git config --global --add safe.directory /github/workspace
 
-          tag=$(git tag --sort version:refname | tail -n 2 | head -n 1)
+          tag=$(git tag --sort version:refname | tail -n 2)
           echo $tag
           if [ "$tag" ]; then
             changelog=$(git log --oneline --no-decorate $tag..HEAD)
-            
+
           else
             changelog=$(git log --oneline --no-decorate)
           fi
