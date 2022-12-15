@@ -12,7 +12,8 @@ on:
       #- main
       - "hotfix*"
       #- develop 
-      
+env: 
+    RELEASE_VERSION: untag      
 jobs:
   sample-script:
     runs-on: ubuntu-latest
@@ -20,7 +21,6 @@ jobs:
      - name: Checkout code
        uses: actions/checkout@v2
      - name: Set env
-       id: myversion
        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
      - name: Echo final
        run: echo " Final release tag '${{ env.RELEASE_VERSION }}' "
@@ -28,8 +28,7 @@ jobs:
     name: Get runner id and tag the current code snapshot
     runs-on: ubuntu-latest
     needs: sample-script
-    
-    if: ${{ jobs.sample-script.steps.myversion.outputs.RELEASE_VERSION == '' }}
+    if: ${{ env.RELEASE_VERSION == 'untag' }}
     steps:
       - uses: actions/checkout@v2
       - name: Tag and push current repo code
