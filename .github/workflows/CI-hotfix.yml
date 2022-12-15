@@ -50,7 +50,6 @@ jobs:
        run: |
          echo $RELEASE_VERSION
          echo ${{ env.RELEASE_VERSION }}  
-       
   build-project:
     # Defines the type of runner the job runs on
     runs-on: ubuntu-latest
