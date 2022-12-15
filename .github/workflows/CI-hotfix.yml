@@ -42,7 +42,7 @@ jobs:
           echo "::set-output name=changelog::$changelog" 
        env:
          REPO: ${{ github.repository }} 
-     - name: Print results
+     - name: Print resultss
        run: echo " Print ${{ steps.Changelog.outputs.changelog }} "
      - name: Set env ${{ github.event.release.tag_name }}
        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
