@@ -25,7 +25,12 @@ jobs:
           git config --global --add safe.directory /github/workspace
 
           tag=$(git tag --sort version:refname | tail -n 2 | head -n 1)
-          changelog=$(git log --oneline --no-decorate)
+
+          if [ "$tag" ]; then
+            changelog=$(git log --oneline --no-decorate $tag..HEAD)
+          else
+            changelog=$(git log --oneline --no-decorate)
+          fi
 
           echo $changelog
 
