@@ -19,46 +19,9 @@ jobs:
     steps:
      - name: Checkout code
        uses: actions/checkout@v2
-     - name: script run ${{ github.repository }} ${{ github.ref }} ${{ github.ref }}
-       id: Changelog
-       run: | #sh ./.github/workflows/entrypoint.sh
-          git clone --quiet https://github.com/$REPO &> /dev/null
-
-          git config --global --add safe.directory /github/workspace
-
-          tag=$(git tag --sort version:refname | tail -n 2)
-          echo $tag
-          if [ "$tag" ]; then
-            changelog=$(git log --oneline --no-decorate $tag..HEAD)
-
-          else
-            changelog=$(git log --oneline --no-decorate)
-          fi
-
-          echo $changelog
-
-          changelog="${changelog//'%'/'%25'}"
-          changelog="${changelog//$'\n'/'%0A' - }"
-          changelog=" - ${changelog//$'\r'/'%0D'}"
-
-          echo "::set-output name=changelog::$changelog" 
-       env:
-         REPO: ${{ github.repository }} 
-     - name: Print resultsss
-       run: echo " Print ${{ steps.Changelog.outputs.changelog }} "
+     
      - name: Set env
        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-     - name: Test
-       run: |
-         echo $RELEASE_VERSION
-         echo ${{ env.RELEASE_VERSION }} 
-     - name: Extract tag name
-       id: tag
-       uses: actions/github-script@0.2.0
-       with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         script: |
-           return context.payload.ref.replace(/\/refs\/tags\//, '');
      - name: Echo final
        run: echo " Final release tag '${{ env.RELEASE_VERSION }}' "
   
