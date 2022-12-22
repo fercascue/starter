@@ -54,7 +54,7 @@ jobs:
           DISABLE_ERRORS: true
           OUTPUT_DETAILS: detailed
           VALIDATE_ALL_CODEBASE: false
-           
+          DEFAULT_BRANCH: ${{ github.ref_name }}
 
   check-project:
     if: ${{ github.event_name == 'pull_request' }}
