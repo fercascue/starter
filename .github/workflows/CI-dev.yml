@@ -42,8 +42,20 @@ jobs:
        run: npm ci
      - name: Building node 
        run: npm run build --if-present     
-     - name: Linting source code 
-       run: npm run lint
+     
+  lint-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Linting source code 
+        uses: github/super-linter@v3.15.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISABLE_ERRORS: true
+          OUTPUT_DETAILS: detailed
+          VALIDATE_ALL_CODEBASE: false
+           
+
   check-project:
     if: ${{ github.event_name == 'pull_request' }}
     needs: build-project
