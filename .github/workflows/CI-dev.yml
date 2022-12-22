@@ -50,11 +50,10 @@ jobs:
       - name: Linting source code 
         uses: github/super-linter:slim-v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DISABLE_ERRORS: true
-          OUTPUT_DETAILS: detailed
           VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: ${{ github.ref_name }}
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
 
   check-project:
     if: ${{ github.event_name == 'pull_request' }}
